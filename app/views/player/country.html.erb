@@ -1,0 +1,32 @@
+<style>
+    body {
+        font-family: helvetica, verdana, arial, sans-serif;
+        font-size: 15px;
+    }
+</style>
+<h1>Players in
+  <div class="country-word" data-country="<%= params[:country] %>"></div>
+</h1>
+
+<table cellpadding="5" cellspacing="2">
+  <tr>
+    <th>Name</th>
+    <th>Steam ID</th>
+    <th>ELO</th>
+    <th>Last seen</th>
+  </tr>
+  <% @players.each do |player| %>
+      <tr>
+        <td valign="top"><%= CGI::unescape (player.name) %></td>
+        <td>
+          <a href="http://steamcommunity.com/profiles/<%= player.steam_id %>"><img width="40" height="40" src="<%= asset_path('steam.png') %>"/></a>
+        </td>
+        <td>
+          <%= player.elo %>
+        </td>
+        <td>
+          <%= time_ago_in_words(Time.at(player.last_seen).to_datetime) %>
+        </td>
+      </tr>
+  <% end %>
+</table>
